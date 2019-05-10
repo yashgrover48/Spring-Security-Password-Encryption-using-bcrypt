@@ -1,0 +1,32 @@
+drop table authorities;
+
+drop table users;
+
+CREATE TABLE users(
+	username varchar(50) NOT NULL PRIMARY KEY,
+	password varchar(100) NOT NULL,
+	enabled tinyint NOT NULL
+);
+
+
+CREATE TABLE authorities(
+	username varchar(50) NOT NULL,
+	authority varchar(50) NOT NULL,
+	CONSTRAINT authorities_idx_1 UNIQUE(username,authority),
+	CONSTRAINT authorities_ibfk_1 FOREIGN KEY(username) REFERENCES users (username)
+);
+
+INSERT INTO users values('john','{bcrypt}$2a$04$2J/Z3Lm8g2O8LxWKlQtXgeYgja3QG01/a5hHzyRmXKj9nRULSYHJG',1);
+INSERT INTO users values('mary','{bcrypt}$2a$04$2J/Z3Lm8g2O8LxWKlQtXgeYgja3QG01/a5hHzyRmXKj9nRULSYHJG',1);
+INSERT INTO users values('susan','{bcrypt}$2a$04$2J/Z3Lm8g2O8LxWKlQtXgeYgja3QG01/a5hHzyRmXKj9nRULSYHJG',1);
+
+
+INSERT INTO authorities VALUES('john','ROLE_EMPLOYEE');
+INSERT INTO authorities VALUES('mary','ROLE_EMPLOYEE');
+INSERT INTO authorities VALUES('mary','ROLE_MANAGER');
+INSERT INTO authorities VALUES('susan','ROLE_EMPLOYEE');
+INSERT INTO authorities VALUES('susan','ROLE_ADMIN');
+
+select * from users;
+
+select * from authorities;
